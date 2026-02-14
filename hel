@@ -1,14 +1,14 @@
--- WORKSPACE RECREATION â€“ ULTIMATE EDITION (RIGS + ACCESSORIES + SHIRTS/PANTS)
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RequestCommand = ReplicatedStorage:WaitForChild("HDAdminHDClient").Signals.RequestCommandSilent
 
--- Admin commands â€“ start
+
 RequestCommand:InvokeServer(";btools me")
 task.wait(1.2)
 RequestCommand:InvokeServer(";punish all")
-task.wait(0.2)  -- 1.2 second wait as requested
+task.wait(0.2) 
 
--- Get F3X / SyncAPI tool
+
 local player = game.Players.LocalPlayer
 local backpack = player.Backpack
 local character = player.Character
@@ -32,9 +32,7 @@ end
 local syncapi = f3x.SyncAPI
 local endpoint = syncapi.ServerEndpoint
 
--- ============================================================================
--- DELETE ALL EXISTING PARTS (USING SYNCAPI `Remove`)
--- ============================================================================
+
 for _, v in ipairs(workspace:GetDescendants()) do
     if v:IsA("BasePart") or v:IsA("UnionOperation") or v:IsA("MeshPart") then
         task.spawn(function()
@@ -46,9 +44,6 @@ for _, v in ipairs(workspace:GetDescendants()) do
 end
 task.wait(1)
 
--- ============================================================================
--- HELPER FUNCTIONS (SyncAPI wrappers)
--- ============================================================================
 local function syncAnchor(ep, part, anchored)
     ep:InvokeServer("SyncAnchor", {{Part = part, Anchored = anchored}})
 end
@@ -58,7 +53,7 @@ local function batchMaterial(ep, tbl) if #tbl>0 then ep:InvokeServer("SyncMateri
 local function batchColor(ep, tbl) if #tbl>0 then ep:InvokeServer("SyncColor", tbl) end end
 local function batchCollision(ep, tbl) if #tbl>0 then ep:InvokeServer("SyncCollision", tbl) end end
 
--- Mesh helpers
+
 local function createMesh(ep, part) ep:InvokeServer("CreateMeshes", {{Part = part}}) end
 local function syncMeshType(ep, part, t) ep:InvokeServer("SyncMesh", {{Part = part, MeshType = t}}) end
 local function syncMeshScale(ep, part, s) ep:InvokeServer("SyncMesh", {{Part = part, Scale = s}}) end
@@ -67,17 +62,16 @@ local function syncMeshId(ep, part, id) ep:InvokeServer("SyncMesh", {{Part = par
 local function syncMeshTexture(ep, part, tex) ep:InvokeServer("SyncMesh", {{Part = part, TextureId = tex}}) end
 local function syncMeshVertexColor(ep, part, col) ep:InvokeServer("SyncMesh", {{Part = part, VertexColor = col}}) end
 
--- Decal helpers
 local function createDecal(ep, part, face) ep:InvokeServer("CreateTextures", {{Part = part, Face = face, TextureType = "Decal"}}) end
 local function setDecalTexture(ep, part, tex, face) ep:InvokeServer("SyncTexture", {{Part = part, Face = face, TextureType = "Decal", Texture = tex}}) end
 local function setDecalTransparency(ep, part, trans, face) ep:InvokeServer("SyncTexture", {{Part = part, Face = face, TextureType = "Decal", Transparency = trans}}) end
 
--- Texture helpers
+
 local function createTexture(ep, part, face) ep:InvokeServer("CreateTextures", {{Part = part, Face = face, TextureType = "Texture"}}) end
 local function setTextureId(ep, part, tex, face) ep:InvokeServer("SyncTexture", {{Part = part, Face = face, TextureType = "Texture", Texture = tex}}) end
 local function setTextureTransparency(ep, part, trans, face) ep:InvokeServer("SyncTexture", {{Part = part, Face = face, TextureType = "Texture", Transparency = trans}}) end
 
--- Light helpers
+
 local function createLight(ep, part, lightType)
     ep:InvokeServer("CreateLights", {{Part = part, LightType = lightType}})
 end
@@ -92,14 +86,13 @@ local function syncLight(ep, part, lightType, brightness, range, color, shadows,
     ep:InvokeServer("SyncLighting", {params})
 end
 
--- Group helpers
+
 local function createGroup(ep, groupType, parent, items) return ep:InvokeServer("CreateGroup", groupType, parent, items) end
 local function setName(ep, obj, name) ep:InvokeServer("SetName", {obj}, name) end
 local function setLocked(ep, part, lock) ep:InvokeServer("SetLocked", {part}, lock) end
 
--- ============================================================================
--- PARALLEL PART CREATION â€“ EACH PART FORCEâ€‘ANCHORED
--- ============================================================================
+
+
 local P = {}
 
 local partData = {
@@ -7473,3 +7466,4 @@ end
 RequestCommand:InvokeServer(";res all")
 task.wait(0.2)
 RequestCommand:InvokeServer(";re all")
+
